@@ -2,7 +2,7 @@ using UnityEngine.Pool;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Threading;
-/*
+
 public class Stairs : MonoBehaviour
 {
     //====== ŠK’i ======
@@ -66,4 +66,3 @@ public class Stairs : MonoBehaviour
 
     }
 }
-*/
