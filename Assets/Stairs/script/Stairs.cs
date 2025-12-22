@@ -1,68 +1,88 @@
-using UnityEngine.Pool;
 using UnityEngine;
+using UnityEngine.Pool;
 using System.Collections.Generic;
-using System.Threading;
 
 public class Stairs : MonoBehaviour
 {
     //====== 階段 ======
-    //階段のprefab
-    [Header("階段のprefab入れる場所")]
+    [Header("階段のPrefab（1x1キューブ）")]
     [SerializeField]
     private GameObject stairsObject;
 
-    //最初に用意しておくprefab数
-    [Header("最初から用意しておく階段のprefabの数")]
+    [Header("最初に用意しておく階段の数")]
     [SerializeField]
     private int startStairs = 20;
 
-    //階段の間隔
-    [Header("階段の間隔設定")]
+    [Header("階段の間隔（右・上）")]
     [SerializeField]
-    private int IntervalStairs = 1;
+    private float intervalX = 1f;
+    [SerializeField]
+    private float intervalY = 1f;
 
-    //階段をループするやつ
+    //プール
     private ObjectPool<GameObject> stairsPool;
-    //階段の数を管理するリスト
+
+    //使用中の階段
     private List<GameObject> activeStairs = new List<GameObject>();
+
+    //今何段目か
+    private int currentIndex = 0;
 
     private void Awake()
     {
-        //============================
-        //   階段ブロックのプール作成
-        //============================
         stairsPool = new ObjectPool<GameObject>(
             createFunc: () =>
             {
-                // 新しく階段ブロックを作る
                 var obj = Instantiate(stairsObject);
-                obj.SetActive(false);                       // まずは非表示
+                obj.SetActive(false);
                 return obj;
             },
-            actionOnGet: obj => obj.SetActive(true),        // 取り出したら表示
-            actionOnRelease: obj => obj.SetActive(false),   // 返したら非表示
-            actionOnDestroy: obj => Destroy(obj),           // 最大サイズ超えたら破棄
+            actionOnGet: obj => obj.SetActive(true),
+            actionOnRelease: obj => obj.SetActive(false),
+            actionOnDestroy: obj => Destroy(obj),
             collectionCheck: false,
-            defaultCapacity: 3,                            // 最初に20個作っておく
-            maxSize: 100                                    // 最大100個まで管理
+            defaultCapacity: startStairs,
+            maxSize: 200
         );
     }
 
     private void Start()
     {
+        //最初の階段を生成
         GenerateStairs(startStairs);
     }
 
-    
-    public void GenerateStairs;
+    //指定数だけ階段を生成
+    public void GenerateStairs(int count)
     {
         for (int i = 0; i < count; i++)
-        
-        
+        {
+            SpawnOneStair();
+        }
     }
-
-    public void RemoveStairs;
+    //階段を1段だけ生成 <= Player から呼ぶ
+    public void SpawnOneStair()
     {
+        GameObject stair = stairsPool.Get();
 
+        stair.transform.position = new Vector3(
+            currentIndex * intervalX,
+            currentIndex * intervalY,
+            0
+        );
+
+        activeStairs.Add(stair);
+        currentIndex++;
+    }
+    // 全階段を消す（リセット用）
+    public void RemoveStairs()
+    {
+        foreach (var stair in activeStairs)
+        {
+            stairsPool.Release(stair);
+        }
+
+        activeStairs.Clear();
+        currentIndex = 0;
     }
 }

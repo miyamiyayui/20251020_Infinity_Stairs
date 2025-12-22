@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 
 public class otehon : MonoBehaviour
@@ -34,3 +35,4 @@ public class otehon : MonoBehaviour
         stepCount++;
     }
 }
+*/
