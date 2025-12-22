@@ -1,33 +1,87 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
+using UnityEngine.InputSystem;
 
 public class Player_Maine : MonoBehaviour
 {
     //====== Playerの速度 ======
-    //下り速度
+
     [Header("下りる速度")]
     [Tooltip("階段を下りていく速度の変更")]
     [SerializeField]
-    private float downhillSpeed = 0.01f;
+    private float downhillSpeed = 5f;
 
-    //上り速度
     [Header("上り速度")]
     [Tooltip("階段を上る速度の変更")]
     [SerializeField]
-    private float UpSpeed = 0.001f;
+    private float upSpeed = 2f;
 
-    // Start is called before the first frame update
-    void Start()
+    //====== レベル ======
+
+    [Header("現在のレベル")]
+    [SerializeField]
+    private int level = 1;
+
+    //====== 入力 ======
+    //ボタンまだ決まってないところに一時的に入れるよう
+    [Header("一時的なキー")]
+    [SerializeField]
+    private KeyCode levelUpKey = KeyCode.Q;
+
+    //====== 階段管理 ======
+
+    [Header("階段生成スクリプト")]
+    [SerializeField]
+    private Stairs stairs;
+
+    private void Awake()
     {
-        
+        Application.targetFrameRate = 60;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        //実は人間は左 → 右へ視線を動かす習性があるだから階段を上るときは右上に上る　ストレス解消に効く
+        var kb = Keyboard.current;
+        var pad = Gamepad.current;
 
+        Vector2 moveinput = Vector2.zero;
 
+        if (kb != null)
+        {
+            if (kb.aKey.isPressed) moveinput.x -= 1f;
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            LevelUp();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
     }
+
+    void LevelUp()
+    {
+        level++;
+        Debug.Log("Level Up! Lv " + level);
+
+        // レベルアップの恩恵
+        upSpeed += 0.2f;          //上る速度アップ
+        downhillSpeed += 0.5f;    //下り速度アップ
+
+        // 階段を1段増やす
+        stairs.SpawnOneStair();
+    }
+    /*
+    void AutoClimb()
+    {
+        //右上に進む
+        transform.position += new Vector3(upSpeed, upSpeed, 0) * Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.e))
+        {
+
+        }
+    }
+    */
 }

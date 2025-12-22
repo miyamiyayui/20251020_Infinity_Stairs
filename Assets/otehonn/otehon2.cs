@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 
 public class otehon2 : MonoBehaviour
@@ -17,3 +18,4 @@ public class otehon2 : MonoBehaviour
         stair.SpawnStep();
     }
 }
+*/

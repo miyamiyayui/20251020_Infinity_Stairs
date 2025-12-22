@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &127610597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8004184313208856483, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
+  m_PrefabInstance: {fileID: 5652163846253509836}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &514439621
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +157,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downhillSpeed: 0.01
-  UpSpeed: 0.001
+  upSpeed: 2
+  level: 1
+  levelUpKey: 113
+  stairs: {fileID: 1651188838}
 --- !u!4 &514439623
 Transform:
   m_ObjectHideFlags: 0
@@ -321,7 +329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &610955655
 Transform:
   m_ObjectHideFlags: 0
@@ -465,11 +473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9161261f6d0c96c4da85e8df2343147f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 3364886446667840082, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
-  startPos: {x: 0, y: 0, z: 0}
-  stepCount: 0
-  horizontalOffset: 1
-  verticalOffset: 1
 --- !u!1 &1555912671
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,8 +518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4b22eb43b938f42b96812a62a55b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
-  stair: {fileID: 1452769671}
 --- !u!212 &1555912674
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -569,6 +570,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1651188837 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3364886446667840082, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
+  m_PrefabInstance: {fileID: 5652163846253509836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1651188838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651188837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f331a8a914dce834198b9a26d746fb19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stairsObject: {fileID: 127610597}
+  startStairs: 20
+  intervalX: 1
+  intervalY: 1
 --- !u!1 &1880891894
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +700,7 @@ Transform:
   m_GameObject: {fileID: 1996763442}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.52, y: 0.52, z: 0.52}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -782,6 +804,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stairs
       objectReference: {fileID: 0}
+    - target: {fileID: 8004184313208856483, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8735841094203914823, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -825,7 +851,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3364886446667840082, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1651188838}
   m_SourcePrefab: {fileID: 100100000, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
