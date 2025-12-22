@@ -47,11 +47,21 @@ public class Player_Maine : MonoBehaviour
 
         if (kb != null)
         {
-            if (kb.aKey.isPressed) moveinput.x -= 1f;
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            LevelUp();
+            if (kb.dKey.isPressed)
+            {
+                Debug.Log("Dボタンが押されてるよ");
+                transform.position += new Vector3(upSpeed, upSpeed, 0) * Time.deltaTime;
+            }
+            if (kb.aKey.isPressed)
+            {
+                Debug.Log("Aボタンが押されてるよ");
+                transform.position += new Vector3(-downhillSpeed, -downhillSpeed, 0) * Time.deltaTime;
+            }
+            if (kb.qKey.isPressed)
+            {
+                LevelUp();
+                Debug.Log("qボタン押されてる");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -67,7 +77,7 @@ public class Player_Maine : MonoBehaviour
 
         // レベルアップの恩恵
         upSpeed += 0.2f;          //上る速度アップ
-        downhillSpeed += 0.5f;    //下り速度アップ
+        downhillSpeed = 0.2f;    //下り速度アップ
 
         // 階段を1段増やす
         stairs.SpawnOneStair();
@@ -78,10 +88,6 @@ public class Player_Maine : MonoBehaviour
         //右上に進む
         transform.position += new Vector3(upSpeed, upSpeed, 0) * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.e))
-        {
-
-        }
     }
     */
 }

@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f6192dfba74e540b953651236bf508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downhillSpeed: 0.01
+  downhillSpeed: 5
   upSpeed: 2
   level: 1
   levelUpKey: 113
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stairsObject: {fileID: 127610597}
-  startStairs: 20
+  startStairs: 3
   intervalX: 1
   intervalY: 1
 --- !u!1 &1880891894
