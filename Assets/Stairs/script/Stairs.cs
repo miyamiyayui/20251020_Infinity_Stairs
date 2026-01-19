@@ -11,7 +11,7 @@ public class Stairs : MonoBehaviour
 
     [Header("最初に用意しておく階段の数")]
     [SerializeField]
-    private int startStairs = 20;
+    private int startStairs = 3;
 
     [Header("階段の間隔（右・上）")]
     [SerializeField]
