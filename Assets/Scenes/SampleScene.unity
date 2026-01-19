@@ -159,6 +159,11 @@ MonoBehaviour:
   downhillSpeed: 5
   upSpeed: 2
   level: 1
+  upSpeedLevel: 1
+  downhillSpeedLevel: 1
+  attackPowerLevel: 1
+  generalCoin: 100
+  attackPower: 1
   levelUpKey: 113
   stairs: {fileID: 1651188838}
 --- !u!4 &514439623
@@ -176,6 +181,7 @@ Transform:
   m_Children:
   - {fileID: 1996763443}
   - {fileID: 1459725207}
+  - {fileID: 519420032}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
@@ -284,7 +290,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -308,12 +314,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 514439623}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &610955653
 GameObject:
@@ -889,6 +895,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stairs
       objectReference: {fileID: 0}
+    - target: {fileID: 3364886446667840082, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4000760870686200037, guid: 6c6b8ca079502ed45b997a91264fa37a, type: 3}
       propertyPath: m_LocalScale.x
       value: 6.25
@@ -997,7 +1007,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 514439623}
   - {fileID: 5652163846253509836}

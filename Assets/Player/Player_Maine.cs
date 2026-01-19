@@ -33,12 +33,16 @@ public class Player_Maine : MonoBehaviour
 
     [Header("攻撃力")]
     [SerializeField]
-    private int attackPower = 1;
+    private int attackPowerLevel = 1;
 
-    //====== コインやアイテム系 ======
+    //====== コインやステータス系 ======
     [Header("コインの数")]
     [SerializeField]
     private int generalCoin = 100;
+
+    [Header("攻撃力")]
+    [SerializeField]
+    private int attackPower = 1;
 
     //====== 入力 ======
     //ボタンまだ決まってないところに一時的に入れるよう
@@ -110,7 +114,7 @@ public class Player_Maine : MonoBehaviour
 
     void AttackPower()
     {
-
+        attackPowerLevel++;
         attackPower += 1;
     }
     void SpeedLevel()
