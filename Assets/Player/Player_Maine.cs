@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.InputSystem;
 
+//階段に敵を入れる　負けたら一番下に落ちる　下からマグマかなんかを入れてはらはら感を出す　マグマの進行速度の強化など　進行速度上げるか攻撃力を上げるか
 public class Player_Maine : MonoBehaviour
 {
     //====== Playerの速度 ======
@@ -18,9 +19,26 @@ public class Player_Maine : MonoBehaviour
 
     //====== レベル ======
 
-    [Header("現在のレベル")]
+    [Header("総合レベルレベル")]
     [SerializeField]
     private int level = 1;
+
+    [Header("上りレベル")]
+    [SerializeField]
+    private int upSpeedLevel = 1;
+
+    [Header("下り速度")]
+    [SerializeField]
+    private int downhillSpeedLevel = 1;
+
+    [Header("攻撃力")]
+    [SerializeField]
+    private int attackPower = 1;
+
+    //====== コインやアイテム系 ======
+    [Header("コインの数")]
+    [SerializeField]
+    private int generalCoin = 100;
 
     //====== 入力 ======
     //ボタンまだ決まってないところに一時的に入れるよう
@@ -45,6 +63,13 @@ public class Player_Maine : MonoBehaviour
 
         Vector2 moveinput = Vector2.zero;
 
+        if (Time.frameCount % 1 == 0)
+        {
+            
+            stairs.SpawnOneStair();
+        }
+        transform.position += new Vector3(upSpeed, upSpeed, 0) * Time.deltaTime;
+
         if (kb != null)
         {
             if (kb.dKey.isPressed)
@@ -60,7 +85,20 @@ public class Player_Maine : MonoBehaviour
             if (kb.qKey.isPressed)
             {
                 LevelUp();
-                Debug.Log("qボタン押されてる");
+                Debug.Log("総合レベルアップ　qボタン押されてる");
+            }
+            if (kb.wKey.isPressed)
+            {
+                if (generalCoin >= 10)
+                {
+                    generalCoin -= 10;
+                    SpeedLevel();
+                }
+            }
+            if (kb.pKey.isPressed)
+            {
+                if(generalCoin >= 50)
+                AttackPower();
             }
         }
 
@@ -70,17 +108,31 @@ public class Player_Maine : MonoBehaviour
         }
     }
 
+    void AttackPower()
+    {
+
+        attackPower += 1;
+    }
+    void SpeedLevel()
+    {
+        upSpeedLevel++;
+        Debug.Log("SpeedLevel Up!" + upSpeedLevel);
+        upSpeed += 0.2f;          //上る速度アップ
+    }
     void LevelUp()
     {
-        level++;
-        Debug.Log("Level Up! Lv " + level);
+        Time.timeScale = Time.timeScale + 0.1f;
 
-        // レベルアップの恩恵
-        upSpeed += 0.2f;          //上る速度アップ
-        downhillSpeed = 0.2f;    //下り速度アップ
+        //ctrl + k  ctrl + cでコメントアウト　ctrl + uで解除
+        //level++;
+        //Debug.Log("Level Up! Lv " + level);
 
-        // 階段を1段増やす
-        stairs.SpawnOneStair();
+        //// レベルアップの恩恵
+        //upSpeed += 0.2f;          //上る速度アップ
+        //downhillSpeed += 0.5f;    //下り速度アップ
+
+        //// 階段を1段増やす
+        //stairs.SpawnOneStair();
     }
     /*
     void AutoClimb()
