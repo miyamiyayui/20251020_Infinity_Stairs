@@ -10,37 +10,58 @@ public class Player_Maine : MonoBehaviour
     [Header("下りる速度")]
     [Tooltip("階段を下りていく速度の変更")]
     [SerializeField]
+    [Min(0.1f)]
     private float downhillSpeed = 5f;
 
     [Header("上り速度")]
     [Tooltip("階段を上る速度の変更")]
     [SerializeField]
+    [Min(0.1f)]
     private float upSpeed = 2f;
 
     //====== レベル ======
 
     [Header("総合レベルレベル")]
     [SerializeField]
+    [Min(1)]
     private int level = 1;
 
     [Header("上りレベル")]
     [SerializeField]
+    [Min(1)]
     private int upSpeedLevel = 1;
 
     [Header("下り速度")]
     [SerializeField]
+    [Min(1)]
     private int downhillSpeedLevel = 1;
+
+    [Header("攻撃力")]
+    [SerializeField]
+    [Min(1)]                            //最低数値を設定することができる
+    private int attackPowerLevel = 1;
+
+    [Header("HP")]
+    [SerializeField]
+    [Min(1)]
+    private int hpLevel = 1;
+
+    //====== コインやステータス系 ======
+
+    [Header("コインの数")]
+    [SerializeField]
+    private int generalCoin = 100;
 
     [Header("攻撃力")]
     [SerializeField]
     private int attackPower = 1;
 
-    //====== コインやアイテム系 ======
-    [Header("コインの数")]
+    [Header("HP")]
     [SerializeField]
-    private int generalCoin = 100;
+    private int hp = 1;
 
     //====== 入力 ======
+
     //ボタンまだ決まってないところに一時的に入れるよう
     [Header("一時的なキー")]
     [SerializeField]
@@ -110,7 +131,7 @@ public class Player_Maine : MonoBehaviour
 
     void AttackPower()
     {
-
+        attackPowerLevel++;
         attackPower += 1;
     }
     void SpeedLevel()
