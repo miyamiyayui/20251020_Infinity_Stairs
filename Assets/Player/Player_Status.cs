@@ -18,6 +18,8 @@ public class Player_Status : MonoBehaviour
     [Min(1)]
     private int baseAttack = 1;
 
+    // ----- 初期速度 -----
+
     [Header(" ----- 初期速度 ----- ")]
 
     [Header("初期上り速度")]
@@ -30,16 +32,38 @@ public class Player_Status : MonoBehaviour
     [Min(0.01f)]
     private float baseDownhillSpeed = 0.2f;
 
-    [Header(" ----- 初期設定 ----- ")]
+    // ----- 所持コイン -----
 
-    [Header("初期レベル")]
-    [SerializeField]
-    [Min(1)]
-    private int level = 1;
+    [Header(" 所持コイン ")]
 
     [Header("初期所持コイン")]
     [SerializeField]
     private int baseCoin = 100;
+
+    // ===== レベル系 =====
+
+    [Header(" ----- レベル ----- ")]
+
+    [Header("HPレベル")]
+    [SerializeField]
+    [Range(1, 99)]
+    private int levelUpHp = 1;
+
+    [Header("攻撃力レベル")]
+    [SerializeField]
+    [Range(1, 99)]
+    private int levelUpAttack = 1;
+
+    [Header("上りレベル")]
+    [SerializeField]
+    [Range(1, 99)]
+    private int levelUpUpSpeed = 1;
+
+    [Header("下りレベル")]
+    [SerializeField]
+    [Range(1, 99)]
+    private int levelUpDownhillSpeed = 1;
+
 
     // ===== 基本ステータス（外部参照可能 変更不可） =====
     public int Hp { get; private set; }          // 現在HP
@@ -50,7 +74,7 @@ public class Player_Status : MonoBehaviour
     public int Level => Level;                   // 現在レベル
 
 
-    // ゲーム開始時の初期値の設定
+    // ===== ゲーム開始時の初期値の設定 =====
     private void Awake()
     {
         Hp = baseHp;
@@ -60,10 +84,19 @@ public class Player_Status : MonoBehaviour
         Coin = baseCoin;
     }
 
+    // ===== コイン消費処理 =====
     public bool UseCoin(int amount)
     {
         if (Coin < amount) return false;
         Coin -= amount;
         return true;
+    }
+
+    // ===== レベルアップ系 =====
+
+    // HPレベルアップ
+    public void LevelUpHp()
+    {
+        level++
     }
 }
