@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class Player_Status : MonoBehaviour
 {
-    [Header("【初期ステータス】")]
+    // ===== 基本ステータス =====
 
-    [Header("初期HP")]
+    [Header(" ===== 初期ステータス ===== ")]
+
+    [Header("基盤HP")]
     [SerializeField]
     private int baseHp = 1;
 
-    [Header("初期攻撃力")]
+    [Header("基盤攻撃力")]
     [SerializeField]
     private int baseAttack = 1;
 
-    [Header("初期速度")]
+    [Header("基盤速度")]
     [SerializeField]
     private int baseSpeed;
 
-    [Header("初期所持コイン")]
+    [Header("基盤所持コイン")]
     [SerializeField]
     private int baseCoin = 100;
 

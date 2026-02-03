@@ -6,20 +6,22 @@ using UnityEngine.InputSystem;
 public class Player_Maine : MonoBehaviour
 {
     //====== Playerの速度 ======
+    [Header("===== Playerの速度系の設定 =====")]
 
     [Header("下りる速度")]
     [Tooltip("階段を下りていく速度の変更")]
     [SerializeField]
-    [Min(0.1f)]
+    [Range(0.1f, 1f)]                        // <- 最小値と最大値の設定するやつ
     private float downhillSpeed = 5f;
 
     [Header("上り速度")]
     [Tooltip("階段を上る速度の変更")]
     [SerializeField]
-    [Min(0.1f)]
+    [Min(0.1f)]                              // <- これが最小値を設定するやつ
     private float upSpeed = 2f;
 
     //====== レベル ======
+    [Space(20)]
 
     [Header("総合レベルレベル")]
     [SerializeField]
