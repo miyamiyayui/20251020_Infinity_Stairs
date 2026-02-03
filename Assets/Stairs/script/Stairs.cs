@@ -45,7 +45,7 @@ public class Stairs : MonoBehaviour
             maxSize: 200
         );
     }
-
+    [ContextMenu("Às")]
     private void Start()
     {
         //Å‰‚ÌŠK’i‚ğ¶¬
