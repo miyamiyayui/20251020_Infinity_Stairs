@@ -6,40 +6,42 @@ public class Player_Status : MonoBehaviour
 {
     // ===== 基本ステータス =====
 
-    [Header(" ===== 初期ステータス ===== ")]
+    [Header(" ===== 基盤ステータス ===== ")]
 
-    [Header("基盤HP")]
+    [Header("初期HP")]
     [SerializeField]
+    [Min(1)]
     private int baseHp = 1;
 
-    [Header("基盤攻撃力")]
+    [Header("初期攻撃力")]
     [SerializeField]
+    [Min(1)]
     private int baseAttack = 1;
 
-    [Header("基盤速度")]
+    [Header("----- 初期速度 -----")]
     [SerializeField]
-    private int baseSpeed;
+    [Min(0.01f)]
+    private float baseSpeed = 0.1f;
 
-    [Header("基盤所持コイン")]
+    [Header("初期レベル")]
+    [SerializeField]
+    [Min(1)]
+    private int level = 1;
+
+    [Header("初期所持コイン")]
     [SerializeField]
     private int baseCoin = 100;
 
-    // ===== 基本ステータス（外部参照可能） =====
-    public int Hp { get; private set; }     // HP
-    public int attack { get; private set; } // 攻撃力
-    public int coin { get; private set; }   // コイン
+    // ===== 基本ステータス（外部参照可能 変更不可） =====
+    public int Hp { get; private set; }     // 現在HP
+    public int Attack { get; private set; } // 現在攻撃力
+    public int Coin { get; private set; }   // 現在コイン
+    public int Level => Level;              // 現在レベル
 
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Hp = baseHp;
+        Attack = baseAttack;
+        Coin = baseCoin;
     }
 }
