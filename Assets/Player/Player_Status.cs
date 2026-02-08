@@ -42,19 +42,19 @@ public class Player_Status : MonoBehaviour
 
     [Header("HPレベル")]
     [SerializeField, Range(1, 99)]
-    private int levelHp = 1;
+    private int hpLevel = 1;
 
     [Header("攻撃力レベル")]
     [SerializeField, Range(1, 99)]
-    private int levelAttack = 1;
+    private int attackLevel = 1;
 
     [Header("上りレベル")]
     [SerializeField, Range(1, 99)]
-    private int levelUpSpeed = 1;
+    private int upSpeedLevel = 1;
 
     [Header("下りレベル")]
     [SerializeField, Range(1, 99)]
-    private int levelDownhillSpeed = 1;
+    private int downSpeedLevel = 1;
 
 
     // ===== 基本ステータス（外部参照可能 変更不可） =====
@@ -63,8 +63,10 @@ public class Player_Status : MonoBehaviour
     public float UpSpeed { get; private set; }   // 上り速度
     public float DownSpeed { get; private set; } // 下り速度
     public int Coin { get; private set; }        // 現在コイン
-    public int LevelHp => levelHp;               // 現在レベル
-
+    public int HpLevel => hpLevel;
+    public int AttackLevel => attackLevel;
+    public int UpSpeedLevel => upSpeedLevel;
+    public int DownSpeedLevel => downSpeedLevel;
 
     // ===== ゲーム開始時の初期値の設定 =====
     private void Awake()
@@ -76,52 +78,56 @@ public class Player_Status : MonoBehaviour
         Coin = baseCoin;
     }
 
-    // ===== コイン消費処理 =====
-    public bool UseCoin(int amount)
+    // ===== レベルアップ系 =====
+
+    public void Damage(int value)
     {
-        if (Coin < amount) return false;
-        Coin -= amount;
+        Hp -= value;
+        if (Hp < 0) Hp = 0;
+    }
+
+    public void HealFull()
+    {
+        Hp = baseHp + hpLevel - 1;
+    }
+
+    // ===== コイン =====
+
+    public bool UseCoin(int cost)
+    {
+        if (Coin < cost) return false;
+        Coin -= cost;
         return true;
     }
 
-    // ===== レベルアップ系 =====
+    public void AddCoin(int value)
+    {
+        Coin += value;
+    }
 
-    // HPレベルアップ
+    // ===== レベルアップ =====
+
     public void LevelUpHp()
     {
-        levelHp++;
-        Hp += 1;
+        hpLevel++;
+        Hp++;
     }
 
-    // 攻撃力レベルアップ
     public void LevelUpAttack()
     {
-        levelAttack++;
-        Attack += 1;
+        attackLevel++;
+        Attack++;
     }
 
-    // 上りレベルアップ
     public void LevelUpUpSpeed()
     {
-        levelUpSpeed++;
-        UpSpeed += 1;
+        upSpeedLevel++;
+        UpSpeed += 0.2f;
     }
 
-    // 下りレベルアップ
-    public void LevelUpDownhillSpeed()
+    public void LevelUpDownSpeed()
     {
-        levelDownhillSpeed++;
-        DownSpeed += 1;
-    }
-
-    public void Damage(int damege)
-    {
-        Hp -= damege;
-
-        if (Hp <= 0)
-        {
-            Hp = levelHp;
-        }
-
+        downSpeedLevel++;
+        DownSpeed += 0.3f;
     }
 }

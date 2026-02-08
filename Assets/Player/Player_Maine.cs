@@ -1,168 +1,83 @@
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.InputSystem;
 
-//階段に敵を入れる　負けたら一番下に落ちる　下からマグマかなんかを入れてはらはら感を出す　マグマの進行速度の強化など　進行速度上げるか攻撃力を上げるか
 public class Player_Maine : MonoBehaviour
 {
-    //====== Playerの速度 ======
-    [Header("===== Playerの速度系の設定 =====")]
+    [Header("参照")]
+    [SerializeField] private Player_Status status;
+    [SerializeField] private StepManager stepManager;
 
-    [Header("下りる速度")]
-    [Tooltip("階段を下りていく速度の変更")]
-    [SerializeField]
-    [Range(0.1f, 1f)]                        // <- 最小値と最大値の設定するやつ
-    private float downhillSpeed = 5f;
+    [Header("落下位置")]
+    [SerializeField] private Vector3 bottomPosition = Vector3.zero;
 
-    [Header("上り速度")]
-    [Tooltip("階段を上る速度の変更")]
-    [SerializeField]
-    [Min(0.1f)]                              // <- これが最小値を設定するやつ
-    private float upSpeed = 2f;
-
-    //====== レベル ======
-    [Space(20)]
-
-    [Header("総合レベルレベル")]
-    [SerializeField]
-    [Min(1)]
-    private int level = 1;
-
-    [Header("上りレベル")]
-    [SerializeField]
-    [Min(1)]
-    private int upSpeedLevel = 1;
-
-    [Header("下り速度")]
-    [SerializeField]
-    [Min(1)]
-    private int downhillSpeedLevel = 1;
-
-    [Header("攻撃力")]
-    [SerializeField]
-    [Min(1)]                            //最低数値を設定することができる
-    private int attackPowerLevel = 1;
-
-    [Header("HP")]
-    [SerializeField]
-    [Min(1)]
-    private int hpLevel = 1;
-
-    //====== コインやステータス系 ======
-
-    [Header("コインの数")]
-    [SerializeField]
-    private int generalCoin = 100;
-
-    [Header("攻撃力")]
-    [SerializeField]
-    private int attackPower = 1;
-
-    [Header("HP")]
-    [SerializeField]
-    private int hp = 1;
-
-    //====== 入力 ======
-
-    //ボタンまだ決まってないところに一時的に入れるよう
-    [Header("一時的なキー")]
-    [SerializeField]
-    private KeyCode levelUpKey = KeyCode.Q;
-
-    //====== 階段管理 ======
-
-    [Header("階段生成スクリプト")]
-    [SerializeField]
-    private Stairs stairs;
-
-    private void Awake()
-    {
-        Application.targetFrameRate = 60;
-    }
-    void Update()
+    private void Update()
     {
         var kb = Keyboard.current;
-        var pad = Gamepad.current;
+        if (kb == null) return;
 
-        Vector2 moveinput = Vector2.zero;
-
-        if (Time.frameCount % 1 == 0)
+        // ===== 上る =====
+        if (kb.dKey.isPressed)
         {
-            
-            stairs.SpawnOneStair();
-        }
-        transform.position += new Vector3(upSpeed, upSpeed, 0) * Time.deltaTime;
-
-        if (kb != null)
-        {
-            if (kb.dKey.isPressed)
-            {
-                Debug.Log("Dボタンが押されてるよ");
-                transform.position += new Vector3(upSpeed, upSpeed, 0) * Time.deltaTime;
-            }
-            if (kb.aKey.isPressed)
-            {
-                Debug.Log("Aボタンが押されてるよ");
-                transform.position += new Vector3(-downhillSpeed, -downhillSpeed, 0) * Time.deltaTime;
-            }
-            if (kb.qKey.isPressed)
-            {
-                LevelUp();
-                Debug.Log("総合レベルアップ　qボタン押されてる");
-            }
-            if (kb.wKey.isPressed)
-            {
-                if (generalCoin >= 10)
-                {
-                    generalCoin -= 10;
-                    SpeedLevel();
-                }
-            }
-            if (kb.pKey.isPressed)
-            {
-                if(generalCoin >= 50)
-                AttackPower();
-            }
+            MoveUp();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        // ===== 下りる =====
+        if (kb.aKey.isPressed)
         {
+            MoveDown();
+        }
 
+        // ===== 仮：ダメージ =====
+        if (kb.spaceKey.wasPressedThisFrame)
+        {
+            status.Damage(1);
+            Debug.Log("HP : " + status.Hp);
+        }
+
+        // ===== 死亡 =====
+        if (status.Hp <= 0)
+        {
+            FallToBottom();
+        }
+
+        // ===== テスト用レベルアップ =====
+        if (kb.qKey.wasPressedThisFrame)
+        {
+            status.LevelUpUpSpeed();
+            Debug.Log("上り速度Lv：" + status.UpSpeedLevel);
+        }
+
+        if (kb.wKey.wasPressedThisFrame)
+        {
+            status.LevelUpDownSpeed();
+            Debug.Log("下り速度Lv：" + status.DownSpeedLevel);
         }
     }
 
-    void AttackPower()
+    void MoveUp()
     {
-        attackPowerLevel++;
-        attackPower += 1;
+        Vector3 move =
+            Vector3.right * status.UpSpeed +
+            Vector3.up * status.UpSpeed;
+
+        transform.position += move * Time.deltaTime;
+        stepManager.AddStep();
     }
-    void SpeedLevel()
+
+    void MoveDown()
     {
-        upSpeedLevel++;
-        Debug.Log("SpeedLevel Up!" + upSpeedLevel);
-        upSpeed += 0.2f;          //上る速度アップ
+        Vector3 move =
+            Vector3.left * status.DownSpeed +
+            Vector3.down * status.DownSpeed;
+
+        transform.position += move * Time.deltaTime;
     }
-    void LevelUp()
+
+    void FallToBottom()
     {
-        Time.timeScale = Time.timeScale + 0.1f;
-
-        //ctrl + k  ctrl + cでコメントアウト　ctrl + uで解除
-        //level++;
-        //Debug.Log("Level Up! Lv " + level);
-
-        //// レベルアップの恩恵
-        //upSpeed += 0.2f;          //上る速度アップ
-        //downhillSpeed += 0.5f;    //下り速度アップ
-
-        //// 階段を1段増やす
-        //stairs.SpawnOneStair();
+    confirmation:
+        transform.position = bottomPosition;
+        stepManager.ResetStep();
+        status.HealFull();
     }
-    /*
-    void AutoClimb()
-    {
-        //右上に進む
-        transform.position += new Vector3(upSpeed, upSpeed, 0) * Time.deltaTime;
-
-    }
-    */
 }
