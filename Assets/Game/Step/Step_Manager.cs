@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StepManager : MonoBehaviour
+public class Step_Manager : MonoBehaviour
 {
     [Header("“GoŒ»İ’è")]
     [SerializeField] private int enemyInterval = 20;

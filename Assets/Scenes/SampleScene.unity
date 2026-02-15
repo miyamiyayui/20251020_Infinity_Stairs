@@ -161,10 +161,11 @@ MonoBehaviour:
   baseUpSpeed: 0.1
   baseDownhillSpeed: 0.2
   baseCoin: 100
-  levelHp: 1
-  levelAttack: 1
-  levelUpSpeed: 1
-  levelDownhillSpeed: 1
+  hpLevel: 1
+  attackLevel: 1
+  upSpeedLevel: 1
+  downSpeedLevel: 1
+  test: 1
 --- !u!4 &171482842
 Transform:
   m_ObjectHideFlags: 0
@@ -174,6 +175,50 @@ Transform:
   m_GameObject: {fileID: 171482840}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &271112767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 271112769}
+  - component: {fileID: 271112768}
+  m_Layer: 0
+  m_Name: Enemy_Status
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &271112768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271112767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10d8e1351caecdb499cfced8700f6f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &271112769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271112767}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -209,18 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f6192dfba74e540b953651236bf508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downhillSpeed: 0.1
-  upSpeed: 2
-  level: 1
-  upSpeedLevel: 1
-  downhillSpeedLevel: 1
-  attackPowerLevel: 1
-  hpLevel: 1
-  generalCoin: 100
-  attackPower: 1
-  hp: 1
-  levelUpKey: 113
-  stairs: {fileID: 1651188838}
+  status: {fileID: 0}
+  stepManager: {fileID: 0}
+  bottomPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &514439623
 Transform:
   m_ObjectHideFlags: 0
@@ -924,3 +960,4 @@ SceneRoots:
   - {fileID: 5652163846253509836}
   - {fileID: 171482842}
   - {fileID: 1928411906}
+  - {fileID: 271112769}

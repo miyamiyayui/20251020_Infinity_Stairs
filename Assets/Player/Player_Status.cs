@@ -6,7 +6,9 @@ public class Player_Status : MonoBehaviour
 {
     // ===== 基本ステータス =====
 
-    [Header(" ===== 基盤ステータス ===== ")]
+    [Header(" <color=#00FFFF><size=25> Player設定 <size></color> ")]
+
+    [Header(" ===== <color=yellow><size=20> 基盤ステータス </size></color> ===== ")]
 
     [Header("初期HP")]
     [SerializeField, Min(1)]
@@ -55,6 +57,13 @@ public class Player_Status : MonoBehaviour
     [Header("下りレベル")]
     [SerializeField, Range(1, 99)]
     private int downSpeedLevel = 1;
+
+    // 調節系統設定下手に触るな
+
+    [Header(" <color=red><size=20> !!!触るな危険!!! </size></color> ")]
+
+    [SerializeField]
+    private int test = 1;
 
 
     // ===== 基本ステータス（外部参照可能 変更不可） =====

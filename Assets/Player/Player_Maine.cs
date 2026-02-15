@@ -5,7 +5,7 @@ public class Player_Maine : MonoBehaviour
 {
     [Header("QÆ")]
     [SerializeField] private Player_Status status;
-    [SerializeField] private StepManager stepManager;
+    [SerializeField] private Step_Manager stepManager;
 
     [Header("—‰ºˆÊ’u")]
     [SerializeField] private Vector3 bottomPosition = Vector3.zero;
