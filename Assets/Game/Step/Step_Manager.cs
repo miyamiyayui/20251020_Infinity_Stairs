@@ -2,29 +2,58 @@ using UnityEngine;
 
 public class Step_Manager : MonoBehaviour
 {
-    [Header("敵出現設定")]
-    [SerializeField] private int enemyInterval = 20;
-    [SerializeField] private int bossStep = 100;
+    [Header("===== 階段設定 =====")]
+    [SerializeField] private int totalSteps = 100;
+    [SerializeField] private int enemyInterval = 10;
+    [SerializeField] private int bossFloor = 100;
 
-    public int CurrentStep { get; private set; }
+    [Header("===== 参照 =====")]
+    [SerializeField] private Stairs stairs;
 
-    public void AddStep(int value = 1)
+    [Header("===== 敵Prefab =====")]
+    [SerializeField] private Enemy_Status enemyPrefab;
+    [SerializeField] private Enemy_Status bossPrefab;
+
+    private int currentStep = 0;
+
+    public void AddStep()
     {
-        CurrentStep += value;
+        if (currentStep >= totalSteps) return;
 
-        if (CurrentStep == bossStep)
-        {
-            Debug.Log("ボス出現！");
-        }
-        else if (CurrentStep % enemyInterval == 0)
-        {
-            Debug.Log("敵出現！");
-        }
+        currentStep++;
+
+        SpawnEnemyIfNeeded(currentStep);
     }
 
     public void ResetStep()
     {
-        CurrentStep = 0;
-        Debug.Log("一番下に落ちた");
+        currentStep = 0;
+    }
+
+    void SpawnEnemyIfNeeded(int floor)
+    {
+        Enemy_Status prefab = null;
+
+        // ボス
+        if (floor == bossFloor)
+        {
+            prefab = bossPrefab;
+        }
+        // 雑魚
+        else if (floor % enemyInterval == 0)
+        {
+            prefab = enemyPrefab;
+        }
+
+        if (prefab == null) return;
+
+        Vector3 pos = stairs.GetStepPosition(floor - 1);
+
+        Enemy_Status enemy =
+            Instantiate(prefab, pos, Quaternion.identity);
+
+        enemy.Initialize(floor);
+
+        Debug.Log("敵出現！階段：" + floor);
     }
 }

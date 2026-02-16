@@ -40,7 +40,7 @@ public class Player_Status : MonoBehaviour
 
     // ===== レベル系 =====
 
-    [Header(" ----- レベル ----- ")]
+    [Header(" ===== <color=yellow><size=20> レベル </size></color> ===== ")]
 
     [Header("HPレベル")]
     [SerializeField, Range(1, 99)]

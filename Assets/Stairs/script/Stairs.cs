@@ -1,88 +1,51 @@
 using UnityEngine;
-using UnityEngine.Pool;
 using System.Collections.Generic;
 
 public class Stairs : MonoBehaviour
 {
-    //====== 階段 ======
-    [Header("階段のPrefab（1x1キューブ）")]
+    [Header("階段Prefab")]
     [SerializeField]
     private GameObject stairsObject;
 
-    [Header("最初に用意しておく階段の数")]
+    [Header("階段数")]
     [SerializeField]
-    private int startStairs = 3;
+    private int totalStairs = 100;
 
-    [Header("階段の間隔（右・上）")]
+    [Header("間隔")]
     [SerializeField]
     private float intervalX = 1f;
+
     [SerializeField]
     private float intervalY = 1f;
 
-    //プール
-    private ObjectPool<GameObject> stairsPool;
+    private List<Vector3> stairPositions = new List<Vector3>();
 
-    //使用中の階段
-    private List<GameObject> activeStairs = new List<GameObject>();
-
-    //今何段目か
-    private int currentIndex = 0;
-
-    private void Awake()
-    {
-        stairsPool = new ObjectPool<GameObject>(
-            createFunc: () =>
-            {
-                var obj = Instantiate(stairsObject);
-                obj.SetActive(false);
-                return obj;
-            },
-            actionOnGet: obj => obj.SetActive(true),
-            actionOnRelease: obj => obj.SetActive(false),
-            actionOnDestroy: obj => Destroy(obj),
-            collectionCheck: false,
-            defaultCapacity: startStairs,
-            maxSize: 200
-        );
-    }
-    [ContextMenu("実行")]
     private void Start()
     {
-        //最初の階段を生成
-        GenerateStairs(startStairs);
+        GenerateStairs();
     }
 
-    //指定数だけ階段を生成
-    public void GenerateStairs(int count)
+    void GenerateStairs()
     {
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < totalStairs; i++)
         {
-            SpawnOneStair();
+            Vector3 pos = new Vector3(
+                i * intervalX,
+                i * intervalY,
+                0
+            );
+
+            Instantiate(stairsObject, pos, Quaternion.identity);
+            stairPositions.Add(pos);
         }
     }
-    //階段を1段だけ生成 <= Player から呼ぶ
-    public void SpawnOneStair()
+
+    //階段の座標を取得
+    public Vector3 GetStepPosition(int index)
     {
-        GameObject stair = stairsPool.Get();
+        if (index < 0 || index >= stairPositions.Count)
+            return Vector3.zero;
 
-        stair.transform.position = new Vector3(
-            currentIndex * intervalX,
-            currentIndex * intervalY,
-            0
-        );
-
-        activeStairs.Add(stair);
-        currentIndex++;
-    }
-    // 全階段を消す（リセット用）
-    public void RemoveStairs()
-    {
-        foreach (var stair in activeStairs)
-        {
-            stairsPool.Release(stair);
-        }
-
-        activeStairs.Clear();
-        currentIndex = 0;
+        return stairPositions[index];
     }
 }
